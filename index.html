@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>فرم نیازسنجی طراحی سایت</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" />
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#1c2321; --muted:#5c6a66; --line:#e3ded2;
+  --teal:#0d6e63; --teal-dark:#09554c; --teal-soft:#e6f2ef; --amber:#e8a33d; --amber-soft:#fdf3e0;
+  --danger:#b42318; --radius:16px; --radius-s:12px;
+  --shadow:0 10px 30px rgba(28,35,33,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121615; --card:#1b201f; --ink:#eef2f0; --muted:#a7b3af; --line:#2e3634;
+    --teal:#2fbfa9; --teal-dark:#7adbc9; --teal-soft:#17332e; --amber:#f0b95a; --amber-soft:#332a17;
+    --shadow:0 10px 30px rgba(0,0,0,.35); }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Vazirmatn",Tahoma,system-ui,sans-serif;line-height:1.9;font-size:16px}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 120px}
+.hero{padding:28px 4px 8px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--teal-soft);color:var(--teal-dark);font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px}
+.hero h1{font-size:clamp(26px,6vw,36px);line-height:1.45;margin:14px 0 8px;font-weight:900;letter-spacing:-.01em}
+.hero p{color:var(--muted);margin:0 0 10px;font-size:16.5px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hero .meta span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:13.5px;color:var(--muted)}
+.hero .meta b{color:var(--ink)}
+.howto{background:var(--amber-soft);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:18px 0 4px;font-size:14.5px}
+.howto b{color:var(--ink)}
+/* progress */
+.progress-box{position:sticky;top:0;z-index:20;background:var(--bg);padding:14px 0 10px}
+.progress-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:var(--muted);margin-bottom:8px}
+.progress-top b{color:var(--teal-dark);font-size:15px}
+.bar{height:10px;background:var(--line);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--teal);border-radius:999px;transition:width .35s ease;width:14%}
+.steps-labels{display:flex;justify-content:space-between;margin-top:8px;gap:2px}
+.steps-labels span{font-size:11px;color:var(--muted);text-align:center;flex:1;line-height:1.5}
+.steps-labels span.on{color:var(--teal-dark);font-weight:800}
+@media(max-width:560px){.steps-labels span{font-size:10px}}
+/* cards */
+.step{display:none}
+.step.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.step.active{animation:none}.bar i{transition:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:22px 18px;margin-top:14px}
+.card h2{margin:0 0 4px;font-size:21px;font-weight:900;line-height:1.6}
+.card .sub{color:var(--muted);font-size:14.5px;margin:0 0 18px}
+.q{margin-bottom:20px}
+.q:last-child{margin-bottom:4px}
+.q label.lab,.q .lab{display:block;font-weight:800;font-size:15.5px;margin-bottom:4px}
+.req{color:var(--danger)}
+.hint{font-size:13px;color:var(--muted);margin:0 0 8px;line-height:1.8}
+.ex{font-size:13px;color:var(--teal-dark);background:var(--teal-soft);border-radius:10px;padding:7px 11px;margin:0 0 10px;line-height:1.8}
+input[type=text],input[type=tel],input[type=url],input[type=date],select,textarea{
+  width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--radius-s);
+  padding:11px 13px;outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--teal)}
+textarea{min-height:84px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.err{border-color:var(--danger)!important}
+.err-msg{display:none;color:var(--danger);font-size:13px;margin-top:5px}
+.err-msg.show{display:block}
+/* options */
+.opts{display:grid;gap:9px}
+.opts.two{grid-template-columns:1fr 1fr}
+@media(max-width:480px){.opts.two{grid-template-columns:1fr}}
+.opt{display:flex;gap:10px;align-items:flex-start;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--radius-s);padding:11px 13px;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--teal)}
+.opt input{margin-top:6px;accent-color:var(--teal);width:18px;height:18px;flex-shrink:0;cursor:pointer}
+.opt .t{font-weight:700;font-size:15px;line-height:1.7}
+.opt .d{display:block;font-weight:400;font-size:13px;color:var(--muted);line-height:1.8}
+.opt:has(input:checked){border-color:var(--teal);background:var(--teal-soft)}
+.group-title{font-weight:900;font-size:16px;margin:22px 0 4px;display:flex;align-items:center;gap:8px}
+.group-title:first-of-type{margin-top:6px}
+.group-title::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--amber);flex-shrink:0}
+/* nav */
+.nav{position:fixed;bottom:0;right:0;left:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.nav-in{max-width:760px;margin:0 auto;display:flex;gap:10px}
+.btn{border:none;border-radius:14px;padding:13px 22px;font-weight:800;cursor:pointer;font-size:16px;transition:opacity .15s,transform .1s}
+.btn:active{transform:scale(.98)}
+.btn-next{background:var(--teal);color:#fff;flex:1}
+@media (prefers-color-scheme: dark){.btn-next{color:#07231f}}
+.btn-prev{background:var(--bg);border:1.5px solid var(--line);color:var(--ink);min-width:110px}
+.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.draft-note{text-align:center;font-size:12.5px;color:var(--muted);margin-top:12px}
+/* result */
+.result-head{text-align:center;padding:10px 0 4px}
+.result-head .big{font-size:52px;line-height:1}
+.score-box{border-radius:var(--radius);padding:16px;text-align:center;margin:16px 0;border:1.5px dashed var(--teal);background:var(--teal-soft)}
+.score-box .lvl{font-size:24px;font-weight:900;color:var(--teal-dark)}
+.score-box p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+#summaryText{width:100%;min-height:380px;font-size:13.5px;line-height:2;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--radius-s);padding:14px;direction:rtl}
+.send-btn{width:100%;background:var(--teal);color:#fff;font-size:18px;padding:17px;border-radius:16px;margin-top:16px;box-shadow:0 8px 20px rgba(13,110,99,.22)}
+@media (prefers-color-scheme: dark){.send-btn{color:#07231f}}
+.send-btn:disabled{opacity:.65;cursor:wait}
+.send-status{display:none;border-radius:var(--radius-s);padding:13px 14px;font-size:14.5px;line-height:1.9;margin-top:12px;text-align:center}
+.send-status.show{display:block}
+.send-status.success{background:var(--teal-soft);border:1.5px solid var(--teal);color:var(--teal-dark);font-weight:700}
+.send-status.error{background:#fdf0ef;border:1.5px solid #f0b8b3;color:#7a1f16}
+@media (prefers-color-scheme: dark){.send-status.error{background:#2e1a18;border-color:#6b2f28;color:#f3b8b0}}
+.send-status .retry-link{font-weight:800;text-decoration:underline;cursor:pointer}
+.copy-btn{width:100%;background:var(--card);color:var(--ink);border:1.5px solid var(--line);font-size:16px;padding:14px;border-radius:16px;margin-top:12px}
+.copy-ok{display:none;text-align:center;color:var(--teal-dark);font-weight:800;margin-top:10px;font-size:15px}
+.copy-ok.show{display:block}
+.result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+@media(max-width:480px){.result-actions{grid-template-columns:1fr}}
+.send-guide{background:var(--amber-soft);border-radius:var(--radius-s);padding:12px 14px;font-size:15px;text-align:center;font-weight:700;margin-top:16px}
+footer{color:var(--muted);font-size:13px;text-align:center;padding:8px 16px 0;line-height:1.9}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="hero-badge">فرم شروع پروژه وب‌سایت</span>
+    <h1>چه سایتی برای کسب‌وکارتان لازم است؟</h1>
+    <p>لازم نیست جواب همه‌چیز را از قبل بدانید. این فرم قدم‌به‌قدم از شما می‌پرسد تا دقیقاً مشخص شود چه سایتی، با چه امکاناتی، در چه زمانی و با چه بودجه‌ای برایتان مناسب است. هرجا مطمئن نبودید، گزینه «نمی‌دانم» را بزنید؛ همان هم یک جواب خوب است.</p>
+    <div class="meta">
+      <span>⏱ زمان لازم: <b>حدود ۵ دقیقه</b></span>
+      <span>📝 <b>۷ مرحله</b> کوتاه</span>
+      <span>⭐ فقط ۳ سؤال <b>اجباری</b> است</span>
+    </div>
+    <div class="howto"><b>در پایان چه می‌شود؟</b> با یک دکمه، فرم کامل شما مستقیم برای <b>Reza Studio</b> ایمیل می‌شود تا پیشنهاد دقیق، زمان‌بندی و هزینه را دریافت کنید. یک نسخه از خلاصه هم برای خودتان می‌ماند که بتوانید کپی یا دانلود کنید.</div>
+  </header>
+
+  <div class="progress-box" id="progressBox">
+    <div class="progress-top"><b id="stepTitle">مرحله ۱ از ۷ — کسب‌وکار شما</b><span id="stepPct">۱۴٪</span></div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="steps-labels" id="stepLabels">
+      <span data-l="1">کسب‌وکار</span><span data-l="2">هدف</span><span data-l="3">صفحات و امکانات</span><span data-l="4">ظاهر و محتوا</span><span data-l="5">رقبا و فنی</span><span data-l="6">بودجه و زمان</span><span data-l="7">جمع‌بندی</span>
+    </div>
+  </div>
+
+  <form id="wizard" novalidate>
+
+  <!-- STEP 1 -->
+  <section class="step active" data-step="1">
+    <div class="card">
+      <h2>۱ ـ کسب‌وکار شما</h2>
+      <p class="sub">اول بگویید چه کاری می‌کنید و چطور می‌شود با شما در تماس بود.</p>
+
+      <div class="q">
+        <label class="lab" for="bizName">نام کسب‌وکار <span class="req">*</span></label>
+        <input type="text" id="bizName" placeholder="مثلاً: کافه لاله، فروشگاه پوشاک سارا، کلینیک دندان‌پزشکی لبخند">
+        <div class="err-msg" id="err-bizName">نام کسب‌وکار را بنویسید.</div>
+      </div>
+
+      <div class="q">
+        <span class="lab">صنف / حوزه کاری شما چیست؟</span>
+        <div class="opts two" id="industryOpts"></div>
+        <input type="text" id="industryOther" placeholder="اگر «سایر» را انتخاب کردید، اینجا بنویسید" style="margin-top:9px">
+      </div>
+
+      <div class="grid2">
+        <div class="q">
+          <label class="lab" for="city">شهر</label>
+          <input type="text" id="city" placeholder="مثلاً: تهران">
+        </div>
+        <div class="q">
+          <label class="lab" for="personName">نام و نام خانوادگی شما <span class="req">*</span></label>
+          <input type="text" id="personName" placeholder="نام کسی که این فرم را پر می‌کند">
+          <div class="err-msg" id="err-personName">نام خودتان را بنویسید.</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="lab" for="mobile">شماره موبایل <span class="req">*</span></label>
+        <p class="hint">برای هماهنگی و ارسال پیشنهاد نهایی با همین شماره در تماس خواهیم بود.</p>
+        <input type="tel" id="mobile" inputmode="tel" placeholder="۰۹۱۲ ـــ ـــ ـــ" style="direction:ltr;text-align:left">
+        <div class="err-msg" id="err-mobile">یک شماره موبایل معتبر وارد کنید (با ۰۹ شروع شود و ۱۱ رقم باشد).</div>
+      </div>
+
+      <div class="q">
+        <span class="lab">الان مشتری‌ها چطور شما را پیدا می‌کنند؟ <span style="font-weight:400;color:var(--muted)">(اختیاری)</span></span>
+        <div class="grid2">
+          <input type="text" id="instagram" placeholder="آدرس اینستاگرام — مثلاً cafe.laleh@">
+          <input type="text" id="currentSite" placeholder="سایت فعلی (اگر دارید) — مثلاً example.ir">
+        </div>
+        <input type="text" id="whatsapp" placeholder="شماره واتساپ (اگر با موبایل فرق دارد)" style="margin-top:9px">
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step" data-step="2">
+    <div class="card">
+      <h2>۲ ـ هدف سایت</h2>
+      <p class="sub">سایت قرار است چه کمکی به کسب‌وکارتان بکند؟ فقط یکی را به‌عنوان هدف اصلی انتخاب کنید.</p>
+
+      <div class="q">
+        <span class="lab">هدف اصلی سایت چیست؟</span>
+        <div class="opts" id="goalOpts"></div>
+      </div>
+
+      <div class="q">
+        <span class="lab">مهم‌ترین کاری که بازدیدکننده باید در سایت انجام دهد چیست؟</span>
+        <p class="hint">یعنی وقتی کسی وارد سایت شد، دوست دارید در نهایت چه کار کند؟</p>
+        <div class="opts two" id="ctaOpts"></div>
+      </div>
+
+      <div class="q">
+        <label class="lab" for="whyNow">چرا الان به سایت نیاز پیدا کردید؟</label>
+        <textarea id="whyNow" placeholder="مثلاً: تازه مغازه را باز کرده‌ایم و مشتری‌ها آدرس و قیمت می‌پرسند؛ یا: فروش اینستاگرام سخت شده و می‌خواهیم فروشگاه خودمان را داشته باشیم."></textarea>
+      </div>
+
+      <div class="grid2">
+        <div class="q">
+          <label class="lab" for="audienceAge">مشتری اصلی شما کیست؟ (سن و شهر)</label>
+          <input type="text" id="audienceAge" placeholder="مثلاً: خانم‌های ۲۵ تا ۴۰ سال، تهران">
+        </div>
+        <div class="q">
+          <label class="lab" for="audienceType">مشتری شما بیشتر چه کسانی هستند؟</label>
+          <select id="audienceType">
+            <option value="">انتخاب کنید…</option>
+            <option>مردم عادی (مشتری نهایی)</option>
+            <option>کسب‌وکارها و شرکت‌ها</option>
+            <option>هر دو</option>
+            <option>نمی‌دانم / مشاوره می‌خواهم</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step" data-step="3">
+    <div class="card">
+      <h2>۳ ـ صفحات و امکانات</h2>
+      <p class="sub">هر چیزی را که فکر می‌کنید لازم دارید تیک بزنید. توضیح ساده هر مورد زیر آن نوشته شده؛ اگر شک دارید، تیک نزنید و در پایان بنویسید «مشاوره می‌خواهم».</p>
+
+      <div class="group-title">صفحات سایت</div>
+      <p class="ex">مثال: یک رستوران معمولاً صفحه خانه، منو، درباره ما و تماس را لازم دارد؛ یک فروشگاه پوشاک، صفحه محصولات را هم اضافه می‌کند.</p>
+      <div class="opts two" id="pagesOpts"></div>
+
+      <div class="group-title">امکانات فروشگاهی</div>
+      <p class="ex">مثال: اگر می‌خواهید مشتری داخل خود سایت پول پرداخت کند و سفارش ثبت شود (مثل دیجی‌کالا، ولی در ابعاد کوچک‌تر)، این‌ها لازم می‌شود.</p>
+      <div class="opts" id="shopOpts"></div>
+
+      <div class="group-title">رزرو و نوبت‌دهی</div>
+      <p class="ex">مثال: آرایشگاه، کلینیک یا مربی ورزشی که مشتری آنلاین وقت می‌گیرد.</p>
+      <div class="opts" id="bookingOpts"></div>
+
+      <div class="group-title">راه‌های ارتباط با مشتری</div>
+      <div class="opts" id="contactOpts"></div>
+
+      <div class="group-title">مدیریت و دیده‌شدن</div>
+      <div class="opts" id="adminOpts"></div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="step" data-step="4">
+    <div class="card">
+      <h2>۴ ـ ظاهر و محتوا</h2>
+      <p class="sub">سایت قرار است چه شکلی باشد و متن و عکس‌هایش از کجا بیاید؟</p>
+
+      <div class="q">
+        <span class="lab">لوگو دارید؟ <span style="font-weight:400;color:var(--muted)">(لوگو یعنی نشانه تصویری کسب‌وکار، مثل تابلوی مغازه)</span></span>
+        <div class="opts two" id="logoOpts"></div>
+      </div>
+
+      <div class="q">
+        <label class="lab" for="colors">رنگ دلخواه یا رنگ سازمانی</label>
+        <p class="hint">اگر رنگ خاصی در ذهنتان هست بنویسید؛ اگر نه، خالی بگذارید تا پیشنهاد بدهیم.</p>
+        <input type="text" id="colors" placeholder="مثلاً: سبز و کرم، مثل رنگ بسته‌بندی محصولاتمان">
+      </div>
+
+      <div class="q">
+        <label class="lab" for="ref1">۲ یا ۳ سایتی که از ظاهرشان خوشتان می‌آید</label>
+        <p class="hint">لینک هر سایت را در یک خط بنویسید و کنارش بگویید چه چیزی را دوست دارید (رنگ، سادگی، چیدمان…).</p>
+        <textarea id="ref1" placeholder="مثلاً:&#10;digikala.com — چون ساده و سریع است&#10;سایت رقیبم X — چون منوی قشنگی دارد"></textarea>
+      </div>
+
+      <div class="q">
+        <span class="lab">متن و عکس سایت را چه کسی تهیه می‌کند؟</span>
+        <div class="opts" id="contentOpts"></div>
+      </div>
+
+      <div class="q">
+        <span class="lab">سایت به چه زبان‌هایی باشد؟</span>
+        <div class="opts two" id="langOpts"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 5 -->
+  <section class="step" data-step="5">
+    <div class="card">
+      <h2>۵ ـ رقبا و مسائل فنی</h2>
+      <p class="sub">نگران اصطلاحات فنی نباشید؛ برای هرکدام گزینه «نمی‌دانم» هم هست.</p>
+
+      <div class="q">
+        <span class="lab">دامنه و هاست دارید؟</span>
+        <p class="hint">دامنه یعنی آدرس سایت (مثل yourshop.ir) و هاست یعنی فضایی در اینترنت که سایت روی آن قرار می‌گیرد؛ مثل سند و زمین مغازه.</p>
+        <div class="opts" id="hostingOpts"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="q">
+          <label class="lab" for="rival1">رقیب اصلی اول (نام یا لینک سایت)</label>
+          <input type="text" id="rival1" placeholder="مثلاً: فروشگاه آقای احمدی در خیابان…">
+        </div>
+        <div class="q">
+          <label class="lab" for="rival2">رقیب اصلی دوم (نام یا لینک سایت)</label>
+          <input type="text" id="rival2" placeholder="اختیاری">
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="lab" for="usp">چه چیزی شما را از رقبا متفاوت می‌کند؟</label>
+        <textarea id="usp" placeholder="مثلاً: تنها فروشگاهی هستیم که در شهر ارسال همان‌روز داریم؛ یا ۲۰ سال سابقه خانوادگی داریم."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 6 -->
+  <section class="step" data-step="6">
+    <div class="card">
+      <h2>۶ ـ بودجه و زمان‌بندی</h2>
+      <p class="sub">این دو جواب کمک می‌کند پیشنهاد دقیقاً در حد توان و زمان شما طراحی شود. صادقانه جواب بدهید؛ «نمی‌دانم» هم گزینه درستی است.</p>
+
+      <div class="q">
+        <span class="lab">برای طراحی سایت چقدر بودجه در نظر گرفته‌اید؟ (تومان)</span>
+        <div class="opts" id="budgetOpts"></div>
+      </div>
+
+      <div class="q">
+        <span class="lab">دوست دارید سایت کی آماده باشد؟</span>
+        <div class="opts two" id="deadlineOpts"></div>
+      </div>
+
+      <div class="q">
+        <label class="lab" for="deadlineReason">اگر تاریخ خاصی مدنظرتان است، دلیلش چیست؟</label>
+        <input type="text" id="deadlineReason" placeholder="مثلاً: افتتاحیه مغازه در اول آذر، نمایشگاه، شروع کمپین تبلیغاتی…">
+        <input type="date" id="deadlineDate" style="margin-top:9px" aria-label="تاریخ دقیق موردنظر (اختیاری)">
+      </div>
+
+      <div class="q">
+        <span class="lab">بعد از تحویل سایت، این خدمات را هم می‌خواهید؟</span>
+        <div class="opts" id="supportOpts"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 7 -->
+  <section class="step" data-step="7">
+    <div class="card">
+      <h2>۷ ـ تصمیم و حرف آخر</h2>
+      <p class="sub">آخرین سؤال‌ها تا شروع کار بدون معطلی و رفت‌وبرگشت اضافه انجام شود.</p>
+
+      <div class="q">
+        <span class="lab">تصمیم‌گیرنده نهایی برای شروع پروژه چه کسی است؟</span>
+        <div class="opts two" id="deciderOpts"></div>
+        <input type="text" id="deciderOther" placeholder="اگر شخص دیگری است، نام و نسبت او را بنویسید" style="margin-top:9px">
+      </div>
+
+      <div class="q">
+        <span class="lab">نحوه پرداخت مدنظرتان چیست؟</span>
+        <div class="opts two" id="payOpts"></div>
+      </div>
+
+      <div class="q">
+        <label class="lab" for="finalNotes">هر توضیح، سؤال یا نگرانی دیگری دارید اینجا بنویسید</label>
+        <textarea id="finalNotes" style="min-height:110px" placeholder="مثلاً: قبلاً یک بار سایت زده‌ام و رها شده؛ می‌ترسم مدیریت سایت سخت باشد؛ یا: حتماً باید به اینستاگرامم وصل باشد…"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="step" data-step="8">
+    <div class="card">
+      <div class="result-head">
+        <div class="big">✅</div>
+        <h2 style="margin-top:10px">فرم شما کامل شد!</h2>
+        <p class="sub" style="margin-bottom:0">حالا فقط روی دکمه ارسال بزنید تا فرم کامل‌تان مستقیم به ایمیل Reza Studio برسد.</p>
+      </div>
+
+      <div class="score-box">
+        <div style="font-size:13.5px;color:var(--muted)">برآورد اولیه پیچیدگی سایت شما</div>
+        <div class="lvl" id="complexityLvl">—</div>
+        <div id="complexityDesc" style="font-size:14.5px;margin-top:4px"></div>
+        <p>این فقط یک برآورد اولیه و خودکار است و قطعی نیست. قیمت و زمان دقیق، بعد از بررسی پاسخ‌های شما اعلام می‌شود.</p>
+      </div>
+
+      <!-- honeypot (anti-spam, hidden) -->
+      <input type="text" id="honeypot" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <button type="button" class="btn send-btn" id="sendBtn">✉️ ارسال فرم برای Reza Studio</button>
+      <div class="send-status" id="sendStatus" role="status" aria-live="polite"></div>
+
+      <label class="lab" for="summaryText" style="font-weight:800;display:block;margin:20px 0 8px">خلاصه پاسخ‌های شما — نسخه پشتیبان برای خودتان</label>
+      <textarea id="summaryText" readonly></textarea>
+
+      <button type="button" class="btn copy-btn" id="copyBtn">📋 کپی کردن نتیجه (پشتیبان)</button>
+      <div class="copy-ok" id="copyOk">کپی شد! اگر ارسال ایمیل انجام نشد، این متن را دستی برای Reza Studio بفرستید.</div>
+
+      <div class="send-guide">اگر ارسال خودکار انجام نشد، از دکمه «کپی کردن» استفاده کنید و متن را در واتساپ یا ایمیل برای Reza Studio بفرستید.</div>
+
+      <div class="result-actions">
+        <button type="button" class="btn btn-ghost" id="downloadBtn">⬇ دانلود فایل متنی</button>
+        <button type="button" class="btn btn-ghost" id="editBtn">✏️ ویرایش پاسخ‌ها</button>
+      </div>
+      <button type="button" class="btn btn-ghost" id="restartBtn" style="width:100%;margin-top:10px">شروع دوباره و پاک‌کردن فرم</button>
+    </div>
+  </section>
+
+  </form>
+
+  <p class="draft-note" id="draftNote">پیش‌نویس پاسخ‌های شما فقط در همین گوشی/مرورگر ذخیره می‌شود تا اگر وسط راه رفتید، بتوانید ادامه دهید. ارسال نهایی فقط وقتی انجام می‌شود که در صفحه پایان روی دکمه «ارسال فرم» بزنید.</p>
+  <footer>این فرم برای شناخت بهتر نیاز شما طراحی شده است؛ ارسال آن هیچ تعهدی برای شما ایجاد نمی‌کند.</footer>
+</div>
+
+<nav class="nav" id="bottomNav">
+  <div class="nav-in">
+    <button type="button" class="btn btn-prev" id="prevBtn" disabled>→ قبلی</button>
+    <button type="button" class="btn btn-next" id="nextBtn">مرحله بعد ←</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+"use strict";
+/* ===== CONFIG — برای تعویض سرویس ایمیل در آینده فقط همین بخش را تغییر دهید ===== */
+var CONFIG={
+  FORMSUBMIT_ENDPOINT:"https://formsubmit.co/ajax/reza.ngr8@gmail.com",
+  DESTINATION_EMAIL:"reza.ngr8@gmail.com"
+};
+var $=function(id){return document.getElementById(id)};
+
+/* ---------- option data ---------- */
+function radio(name,items){ return items.map(function(it){return {name:name,v:it[0],d:it[1]||""}})}
+var DATA={
+ industryOpts:{type:"radio",name:"industry",items:[
+   ["فروشگاه و خرده‌فروشی",""],["رستوران و کافه",""],["خدمات زیبایی و آرایشگاه",""],["پزشکی و کلینیک",""],
+   ["آموزش",""],["خدمات فنی و تعمیرات",""],["املاک",""],["گردشگری و اقامت",""],
+   ["تولیدی و صنعتی",""],["خدمات حرفه‌ای (وکالت، حسابداری و…)",""],["هنری و عکاسی",""],["ورزشی",""],["سایر",""]]},
+ goalOpts:{type:"radio",name:"goal",items:[
+   ["فروش آنلاین","مشتری داخل سایت خرید کند و پول پرداخت کند"],
+   ["معرفی و کاتالوگ محصولات / خدمات","مثل یک بروشور آنلاین؛ مشتری ببیند و بعد تماس بگیرد"],
+   ["رزرو و نوبت‌دهی","مشتری آنلاین وقت بگیرد"],
+   ["گرفتن سفارش / درخواست","مشتری فرم پر کند یا درخواستش را ثبت کند"],
+   ["جذب مشتری جدید از گوگل","وقتی مردم در گوگل دنبال کار ما می‌گردند، ما را پیدا کنند"],
+   ["فقط حضور رسمی و اعتبار","یک آدرس رسمی برای کارت ویزیت و معرفی به مشتری"],
+   ["نمی‌دانم / مشاوره می‌خواهم",""],["سایر",""]]},
+ ctaOpts:{type:"radio",name:"cta",items:[
+   ["خرید کند",""],["تماس بگیرد",""],["فرم پر کند",""],["نوبت بگیرد",""],
+   ["سفارش واتساپی بدهد",""],["آدرس و مسیر را پیدا کند",""],["نمونه‌کارها را ببیند",""],["نمی‌دانم / مشاوره می‌خواهم",""]]},
+ pagesOpts:{type:"check",name:"pages",items:[
+   ["خانه (صفحه اصلی)","اولین صفحه‌ای که بازدیدکننده می‌بیند"],
+   ["درباره ما","معرفی شما، سابقه و تیمتان"],
+   ["محصولات / خدمات","فهرست چیزی که می‌فروشید یا ارائه می‌دهید"],
+   ["نمونه‌کار / گالری عکس","عکس کارها و پروژه‌های قبلی"],
+   ["وبلاگ / مجله","مقاله و آموزش؛ برای پیدا شدن در گوگل مفید است"],
+   ["تماس با ما","شماره، آدرس و فرم تماس"],
+   ["سوالات متداول","جواب سؤال‌های تکراری مشتری‌ها"],
+   ["قوانین و شرایط","قوانین خرید، بازگشت کالا و حریم خصوصی"]]},
+ shopOpts:{type:"check",name:"shop",items:[
+   ["سبد خرید","مشتری چند کالا انتخاب کند و یکجا بخرد"],
+   ["درگاه پرداخت ایرانی","پرداخت با کارت بانکی داخل خود سایت (مثل زرین‌پال)"],
+   ["کد تخفیف","برای کمپین و تخفیف‌های مناسبتی"],
+   ["محاسبه هزینه ارسال","بر اساس شهر یا وزن سفارش"],
+   ["مدیریت موجودی","وقتی کالایی تمام شد، خودکار «ناموجود» شود"]]},
+ bookingOpts:{type:"check",name:"booking",items:[
+   ["تقویم نوبت‌دهی","مشتری روز و ساعت خالی را ببیند و انتخاب کند"],
+   ["پیامک یادآوری نوبت","قبل از نوبت، خودکار پیامک برود که مشتری فراموش نکند"]]},
+ contactOpts:{type:"check",name:"contactFeat",items:[
+   ["چت آنلاین","مشتری همان لحظه داخل سایت سؤال بپرسد"],
+   ["دکمه واتساپ","یک دکمه شناور که مستقیم چت واتساپ را باز می‌کند"],
+   ["فرم درخواست / استعلام قیمت","مشتری درخواستش را بنویسد و برای شما ارسال شود"],
+   ["نقشه و مسیریابی","نمایش آدرس روی نقشه و دکمه «مسیریابی»"]]},
+ adminOpts:{type:"check",name:"adminFeat",items:[
+   ["پنل مدیریت فارسی","خودتان بدون کمک کسی، متن و عکس و قیمت را عوض کنید"],
+   ["چندزبانه (فارسی / انگلیسی / عربی)","برای مشتری خارجی یا شهرهای مرزی"],
+   ["اتصال به اینستاگرام","پست‌های اینستاگرام خودکار در سایت هم نمایش داده شود"],
+   ["اتصال به پیامک","ثبت سفارش یا فرم، با پیامک به شما و مشتری اطلاع داده شود"],
+   ["سئو و اتصال به گوگل","(سئو یعنی کاری کنیم گوگل سایت را بهتر نشان دهد) + آمار بازدید"]]},
+ logoOpts:{type:"radio",name:"logo",items:[
+   ["بله، لوگو دارم",""],["لوگو دارم ولی می‌خواهم بهتر شود",""],["لوگو ندارم و باید طراحی شود",""],["نمی‌دانم / مشاوره می‌خواهم",""]]},
+ contentOpts:{type:"radio",name:"content",items:[
+   ["خودم دارم و آماده است","متن و عکس‌ها را خودم تحویل می‌دهم"],
+   ["ندارم و باید تولید شود","نوشتن متن و تهیه عکس با تیم طراح باشد"],
+   ["ترکیبی است","بخشی را دارم و بخشی باید تولید شود"],
+   ["نمی‌دانم / مشاوره می‌خواهم",""]]},
+ langOpts:{type:"check",name:"langs",items:[["فارسی",""],["انگلیسی",""],["عربی",""],["زبان دیگر",""]]},
+ hostingOpts:{type:"radio",name:"hosting",items:[
+   ["بله، دامنه و هاست دارم",""],["دامنه دارم ولی هاست ندارم",""],["هیچ‌کدام را ندارم",""],["نمی‌دانم / مشاوره می‌خواهم","راهنمایی کنید چه چیزی باید بخرم"]]},
+ budgetOpts:{type:"radio",name:"budget",items:[
+   ["زیر ۱۵ میلیون تومان",""],["۱۵ تا ۳۰ میلیون تومان",""],["۳۰ تا ۶۰ میلیون تومان",""],
+   ["۶۰ تا ۱۲۰ میلیون تومان",""],["بالای ۱۲۰ میلیون تومان",""],["نمی‌دانم و مشاوره می‌خواهم","اول پیشنهاد بدهید، بعد تصمیم می‌گیرم"]]},
+ deadlineOpts:{type:"radio",name:"deadline",items:[
+   ["فوری — زیر ۲ هفته",""],["حدود ۱ ماه",""],["۲ تا ۳ ماه",""],["عجله ندارم",""]]},
+ supportOpts:{type:"check",name:"support",items:[
+   ["پشتیبانی و نگهداری ماهانه","به‌روزرسانی، بک‌آپ (نسخه پشتیبان) و رفع اشکال"],
+   ["سئو و تولید محتوای ماهانه","مقاله و محتوا برای جذب مشتری از گوگل"],
+   ["فقط تحویل سایت کافی است","فعلاً خدمات ماهانه نمی‌خواهم"],
+   ["نمی‌دانم / مشاوره می‌خواهم",""]]},
+ deciderOpts:{type:"radio",name:"decider",items:[["خودم هستم",""],["شریکم",""],["مدیر / صاحب بالاتر",""],["شخص دیگر",""]]},
+ payOpts:{type:"radio",name:"pay",items:[["یکجا",""],["قسطی (چند مرحله‌ای)",""],["فرقی ندارد",""],["نمی‌دانم / مشاوره می‌خواهم",""]]}
+};
+
+/* ---------- render options ---------- */
+Object.keys(DATA).forEach(function(key){
+  var box=$(key); if(!box) return;
+  var cfg=DATA[key];
+  box.innerHTML=cfg.items.map(function(it){
+    var inputType=cfg.type==="radio"?"radio":"checkbox";
+    var d=it[1]?'<span class="d">'+it[1]+'</span>':'';
+    return '<label class="opt"><input type="'+inputType+'" name="'+cfg.name+'" value="'+it[0].replace(/"/g,'&quot;')+'"><span><span class="t">'+it[0]+'</span>'+d+'</span></label>';
+  }).join("");
+});
+
+/* ---------- state + draft (browser only) ---------- */
+var LS_KEY="site-needs-form-draft-v1";
+var current=1, TOTAL=7;
+function collectState(){
+  var s={texts:{},radios:{},checks:{}};
+  document.querySelectorAll('input[type=text],input[type=tel],input[type=date],textarea,select').forEach(function(el){ if(el.id) s.texts[el.id]=el.value; });
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(el){ s.radios[el.name]=el.value; });
+  document.querySelectorAll('input[type=checkbox]').forEach(function(el){});
+  var checks={};
+  document.querySelectorAll('input[type=checkbox]:checked').forEach(function(el){ (checks[el.name]=checks[el.name]||[]).push(el.value); });
+  s.checks=checks; s.step=current;
+  return s;
+}
+var saveTimer=null;
+function saveDraft(){ clearTimeout(saveTimer); saveTimer=setTimeout(function(){ try{ localStorage.setItem(LS_KEY,JSON.stringify(collectState())); }catch(e){} },300); }
+function restoreDraft(){
+  var raw; try{ raw=localStorage.getItem(LS_KEY); }catch(e){}
+  if(!raw) return;
+  try{
+    var s=JSON.parse(raw);
+    Object.keys(s.texts||{}).forEach(function(id){ var el=$(id); if(el) el.value=s.texts[id]; });
+    Object.keys(s.radios||{}).forEach(function(n){ var el=document.querySelector('input[type=radio][name="'+n+'"][value="'+CSS.escape(s.radios[n])+'"]'); if(el) el.checked=true; });
+    Object.keys(s.checks||{}).forEach(function(n){ (s.checks[n]||[]).forEach(function(v){ var el=document.querySelector('input[type=checkbox][name="'+n+'"][value="'+CSS.escape(v)+'"]'); if(el) el.checked=true; }); });
+  }catch(e){}
+}
+document.getElementById("wizard").addEventListener("input",saveDraft);
+document.getElementById("wizard").addEventListener("change",saveDraft);
+
+/* ---------- helpers ---------- */
+function val(id){ var el=$(id); return el?el.value.trim():""; }
+function radioVal(name){ var el=document.querySelector('input[type=radio][name="'+name+'"]:checked'); return el?el.value:""; }
+function checkVals(name){ var out=[]; document.querySelectorAll('input[type=checkbox][name="'+name+'"]:checked').forEach(function(el){out.push(el.value)}); return out; }
+function faDigits(str){ return String(str).replace(/[0-9]/g,function(d){return "۰۱۲۳۴۵۶۷۸۹"[d]}).replace(/09/g,"۰۹"); }
+function normDigits(str){ return String(str).replace(/[۰-۹]/g,function(d){return "۰۱۲۳۴۵۶۷۸۹".indexOf(d)}).replace(/[٠-٩]/g,function(d){return "٠١٢٣٤٥٦٧٨٩".indexOf(d)}); }
+
+/* ---------- validation (step 1 only, minimal required) ---------- */
+function validateStep1(){
+  var ok=true;
+  function check(id,errId,test){
+    var el=$(id), bad=!test(el.value.trim());
+    el.classList.toggle("err",bad); $(errId).classList.toggle("show",bad);
+    if(bad) ok=false;
+  }
+  check("bizName","err-bizName",function(v){return v.length>=2});
+  check("personName","err-personName",function(v){return v.length>=2});
+  check("mobile","err-mobile",function(v){ var n=normDigits(v).replace(/[\s-]/g,""); return /^09\d{9}$/.test(n); });
+  return ok;
+}
+
+/* ---------- navigation ---------- */
+var titles={1:"کسب‌وکار شما",2:"هدف سایت",3:"صفحات و امکانات",4:"ظاهر و محتوا",5:"رقبا و فنی",6:"بودجه و زمان",7:"جمع‌بندی",8:"نتیجه"};
+function showStep(n){
+  current=n;
+  document.querySelectorAll(".step").forEach(function(s){ s.classList.toggle("active",+s.dataset.step===n); });
+  var isResult=n===8;
+  $("progressBox").style.display=isResult?"none":"";
+  $("bottomNav").style.display=isResult?"none":"";
+  $("draftNote").style.display=isResult?"none":"";
+  if(!isResult){
+    var pct=Math.round(n/TOTAL*100);
+    $("barFill").style.width=pct+"%";
+    $("stepPct").textContent=faDigits(pct)+"٪";
+    $("stepTitle").textContent="مرحله "+faDigits(n)+" از "+faDigits(TOTAL)+" — "+titles[n];
+    document.querySelectorAll("#stepLabels span").forEach(function(sp){ sp.classList.toggle("on",+sp.dataset.l===n); });
+    $("prevBtn").disabled=(n===1);
+    $("nextBtn").textContent=n===TOTAL?"ساخت خلاصه نهایی ✓":"مرحله بعد ←";
+  }
+  window.scrollTo({top:0,behavior:"smooth"});
+  saveDraft();
+}
+$("nextBtn").addEventListener("click",function(){
+  if(current===1 && !validateStep1()){ window.scrollTo({top:0,behavior:"smooth"}); return; }
+  if(current===TOTAL){ buildResult(); showStep(8); return; }
+  showStep(current+1);
+});
+$("prevBtn").addEventListener("click",function(){ if(current>1) showStep(current-1); });
+
+/* ---------- complexity estimate ---------- */
+function calcComplexity(){
+  var score=0, reasons=[];
+  var goal=radioVal("goal");
+  if(goal.indexOf("فروش آنلاین")===0){score+=3;reasons.push("فروش آنلاین");}
+  if(goal.indexOf("رزرو")===0){score+=2;reasons.push("رزرو و نوبت‌دهی");}
+  var shop=checkVals("shop"), book=checkVals("booking"), admin=checkVals("adminFeat"), contact=checkVals("contactFeat"), pages=checkVals("pages"), langs=checkVals("langs");
+  score+=shop.length*2; if(shop.length) reasons.push(faDigits(shop.length)+" امکان فروشگاهی");
+  score+=book.length*2; if(book.length) reasons.push("سیستم رزرو");
+  admin.forEach(function(a){ if(a.indexOf("چندزبانه")===0){score+=3;reasons.push("چندزبانه بودن");} else score+=1; });
+  score+=Math.max(0,contact.length-1);
+  if(pages.length>6) score+=1;
+  if(langs.length>1) score+=1;
+  var lvl,desc;
+  if(score<=4){ lvl="ساده"; desc="یک سایت معرفی استاندارد با صفحات اصلی و راه‌های تماس؛ سریع و اقتصادی آماده می‌شود."; }
+  else if(score<=11){ lvl="متوسط"; desc="علاوه بر معرفی، امکانات کاربردی مثل فروش، رزرو یا اتصال‌ها را هم شامل می‌شود و زمان و دقت بیشتری می‌خواهد."; }
+  else { lvl="پیشرفته"; desc="ترکیبی از چند سیستم (مثل فروشگاه کامل + رزرو + چندزبانگی) است و مثل یک محصول کامل برنامه‌ریزی می‌شود."; }
+  if(reasons.length) desc+=" دلیل اصلی: "+reasons.join("، ")+"‌.";
+  return {lvl:lvl,desc:desc,score:score};
+}
+
+/* ---------- build summary ---------- */
+function line(label,v){ return "• "+label+": "+(v&&String(v).trim()?v:"—"); }
+function joinOr(arr,sep){ return arr.length?arr.join(sep||"، "):"—"; }
+function buildSummary(){
+  var biz=val("bizName")||"بدون نام";
+  var industry=radioVal("industry"); if(industry==="سایر"&&val("industryOther")) industry="سایر — "+val("industryOther");
+  var L=[];
+  L.push("فرم نیازسنجی سایت ـ "+biz);
+  L.push("تاریخ تکمیل: "+new Date().toLocaleDateString("fa-IR"));
+  L.push("");
+  L.push("═══ ۱) کسب‌وکار ═══");
+  L.push(line("نام کسب‌وکار",val("bizName")));
+  L.push(line("صنف / حوزه کاری",industry));
+  L.push(line("شهر",val("city")));
+  L.push(line("نام پاسخ‌دهنده",val("personName")));
+  L.push(line("موبایل",val("mobile")));
+  L.push(line("اینستاگرام",val("instagram")));
+  L.push(line("سایت فعلی",val("currentSite")));
+  L.push(line("واتساپ",val("whatsapp")));
+  L.push("");
+  L.push("═══ ۲) هدف سایت ═══");
+  L.push(line("هدف اصلی",radioVal("goal")));
+  L.push(line("مهم‌ترین اقدام بازدیدکننده",radioVal("cta")));
+  L.push(line("چرا الان به سایت نیاز دارد",val("whyNow")));
+  L.push(line("مشتری هدف (سن و شهر)",val("audienceAge")));
+  L.push(line("نوع مشتری",val("audienceType")));
+  L.push("");
+  L.push("═══ ۳) صفحات و امکانات ═══");
+  L.push(line("صفحات",joinOr(checkVals("pages"))));
+  L.push(line("فروشگاهی",joinOr(checkVals("shop"))));
+  L.push(line("رزرو و نوبت‌دهی",joinOr(checkVals("booking"))));
+  L.push(line("ارتباط با مشتری",joinOr(checkVals("contactFeat"))));
+  L.push(line("مدیریت و دیده‌شدن",joinOr(checkVals("adminFeat"))));
+  L.push("");
+  L.push("═══ ۴) ظاهر و محتوا ═══");
+  L.push(line("لوگو",radioVal("logo")));
+  L.push(line("رنگ دلخواه / سازمانی",val("colors")));
+  L.push(line("سایت‌های نمونه موردعلاقه",val("ref1")));
+  L.push(line("تهیه متن و عکس",radioVal("content")));
+  L.push(line("زبان‌های سایت",joinOr(checkVals("langs"))));
+  L.push("");
+  L.push("═══ ۵) رقبا و فنی ═══");
+  L.push(line("دامنه و هاست",radioVal("hosting")));
+  L.push(line("رقیب ۱",val("rival1")));
+  L.push(line("رقیب ۲",val("rival2")));
+  L.push(line("مزیت رقابتی",val("usp")));
+  L.push("");
+  L.push("═══ ۶) بودجه و زمان‌بندی ═══");
+  L.push(line("بازه بودجه",radioVal("budget")));
+  L.push(line("ددلاین ایده‌آل",radioVal("deadline")));
+  L.push(line("تاریخ دقیق موردنظر",val("deadlineDate")));
+  L.push(line("دلیل ددلاین",val("deadlineReason")));
+  L.push(line("خدمات پس از تحویل",joinOr(checkVals("support"))));
+  L.push("");
+  L.push("═══ ۷) تصمیم و توضیح آخر ═══");
+  var dec=radioVal("decider"); if(val("deciderOther")) dec=(dec?dec+" — ":"")+val("deciderOther");
+  L.push(line("تصمیم‌گیرنده نهایی",dec));
+  L.push(line("نحوه پرداخت مدنظر",radioVal("pay")));
+  L.push(line("توضیحات و نگرانی‌ها",val("finalNotes")));
+  L.push("");
+  var c=calcComplexity();
+  L.push("═══ برآورد خودکار (غیرقطعی) ═══");
+  L.push("پیچیدگی اولیه: "+c.lvl+" — "+c.desc);
+  L.push("قیمت و زمان نهایی بعد از بررسی توسط Reza Studio اعلام می‌شود.");
+  return L.join("\n");
+}
+function buildResult(){
+  var c=calcComplexity();
+  $("complexityLvl").textContent=c.lvl;
+  $("complexityDesc").textContent=c.desc;
+  $("summaryText").value=buildSummary();
+  $("copyOk").classList.remove("show");
+  resetSendState();
+}
+function resetSendState(){
+  var btn=$("sendBtn"), st=$("sendStatus");
+  if(!btn||!st) return;
+  btn.disabled=false;
+  btn.textContent="✉️ ارسال فرم برای Reza Studio";
+  st.className="send-status";
+  st.innerHTML="";
+}
+/* ---------- email payload (FormSubmit Ajax) ---------- */
+function buildEmailPayload(){
+  var biz=val("bizName")||"بدون نام";
+  var industry=radioVal("industry"); if(industry==="سایر"&&val("industryOther")) industry="سایر — "+val("industryOther");
+  var dec=radioVal("decider"); if(val("deciderOther")) dec=(dec?dec+" — ":"")+val("deciderOther");
+  var c=calcComplexity();
+  function v(x){ return x&&String(x).trim()?String(x).trim():"—"; }
+  function j(arr){ return arr.length?arr.join("، "):"—"; }
+  var payload={};
+  payload["نام کسب‌وکار"]=v(val("bizName"));
+  payload["صنف / حوزه کاری"]=v(industry);
+  payload["شهر"]=v(val("city"));
+  payload["نام پاسخ‌دهنده"]=v(val("personName"));
+  payload["موبایل"]=v(val("mobile"));
+  payload["اینستاگرام"]=v(val("instagram"));
+  payload["سایت فعلی"]=v(val("currentSite"));
+  payload["واتساپ"]=v(val("whatsapp"));
+  payload["هدف اصلی"]=v(radioVal("goal"));
+  payload["مهم‌ترین اقدام بازدیدکننده"]=v(radioVal("cta"));
+  payload["چرا الان به سایت نیاز دارد"]=v(val("whyNow"));
+  payload["مشتری هدف (سن و شهر)"]=v(val("audienceAge"));
+  payload["نوع مشتری"]=v(val("audienceType"));
+  payload["صفحات"]=j(checkVals("pages"));
+  payload["امکانات فروشگاهی"]=j(checkVals("shop"));
+  payload["رزرو و نوبت‌دهی"]=j(checkVals("booking"));
+  payload["ارتباط با مشتری"]=j(checkVals("contactFeat"));
+  payload["مدیریت و دیده‌شدن"]=j(checkVals("adminFeat"));
+  payload["لوگو"]=v(radioVal("logo"));
+  payload["رنگ دلخواه / سازمانی"]=v(val("colors"));
+  payload["سایت‌های نمونه موردعلاقه"]=v(val("ref1"));
+  payload["تهیه متن و عکس"]=v(radioVal("content"));
+  payload["زبان‌های سایت"]=j(checkVals("langs"));
+  payload["دامنه و هاست"]=v(radioVal("hosting"));
+  payload["رقیب ۱"]=v(val("rival1"));
+  payload["رقیب ۲"]=v(val("rival2"));
+  payload["مزیت رقابتی"]=v(val("usp"));
+  payload["بازه بودجه"]=v(radioVal("budget"));
+  payload["ددلاین ایده‌آل"]=v(radioVal("deadline"));
+  payload["تاریخ دقیق موردنظر"]=v(val("deadlineDate"));
+  payload["دلیل ددلاین"]=v(val("deadlineReason"));
+  payload["خدمات پس از تحویل"]=j(checkVals("support"));
+  payload["تصمیم‌گیرنده نهایی"]=v(dec);
+  payload["نحوه پرداخت مدنظر"]=v(radioVal("pay"));
+  payload["توضیحات و نگرانی‌ها"]=v(val("finalNotes"));
+  payload["برآورد پیچیدگی"]=c.lvl+" — "+c.desc;
+  payload["تاریخ تکمیل"]=new Date().toLocaleDateString("fa-IR")+" — "+new Date().toLocaleTimeString("fa-IR");
+  payload["خلاصه کامل فرم"]=buildSummary();
+  /* FormSubmit controls */
+  payload["_subject"]="فرم نیازسنجی سایت جدید — "+biz;
+  payload["_template"]="table";
+  payload["_captcha"]="false";
+  payload["_honey"]=($("honeypot")?$("honeypot").value:"")||"";
+  return payload;
+}
+var isSending=false;
+function setSendStatus(type,html){
+  var st=$("sendStatus");
+  st.className="send-status show "+type;
+  st.innerHTML=html;
+}
+function sendFormByEmail(){
+  if(isSending) return;
+  var btn=$("sendBtn");
+  isSending=true;
+  btn.disabled=true;
+  btn.textContent="در حال ارسال…";
+  var st=$("sendStatus"); st.className="send-status"; st.innerHTML="";
+  var payload;
+  try{ payload=buildEmailPayload(); }catch(e){ payload=null; }
+  if(!payload){
+    isSending=false; btn.disabled=false; btn.textContent="تلاش دوباره برای ارسال";
+    setSendStatus("error","خطایی در آماده‌سازی فرم پیش آمد. لطفاً از دکمه «کپی کردن نتیجه» در پایین استفاده کنید و متن را دستی برای Reza Studio بفرستید.");
+    return;
+  }
+  fetch(CONFIG.FORMSUBMIT_ENDPOINT,{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Accept":"application/json"},
+    body:JSON.stringify(payload)
+  }).then(function(res){
+    return res.text().then(function(txt){
+      var data=null; try{ data=JSON.parse(txt); }catch(e){}
+      if(res.ok && data && (data.success===true || data.success==="true")){
+        return {ok:true};
+      }
+      throw new Error("formsubmit-failed");
+    });
+  }).then(function(){
+    isSending=false;
+    btn.disabled=true;
+    btn.textContent="✓ فرم ارسال شد";
+    setSendStatus("success","✅ فرم شما با موفقیت ارسال شد و به ایمیل Reza Studio رسید.<br>به‌زودی برای اعلام پیشنهاد، زمان‌بندی و هزینه با شما تماس می‌گیریم. خلاصه پاسخ‌ها در پایین همین صفحه برای خودتان هم هست.");
+  }).catch(function(){
+    isSending=false;
+    btn.disabled=false;
+    btn.textContent="تلاش دوباره برای ارسال";
+    setSendStatus("error","ارسال خودکار انجام نشد — ممکن است اینترنت قطع باشد یا سرویس ایمیل موقتاً در دسترس نباشد.<br>نگران نباشید: پاسخ‌هایتان پاک نشده. روی دکمه «کپی کردن نتیجه (پشتیبان)» در پایین بزنید و متن را در واتساپ یا ایمیل دستی برای Reza Studio بفرستید، یا همین‌جا روی «تلاش دوباره» بزنید.");
+  });
+}
+
+/* ---------- result actions ---------- */
+$("sendBtn").addEventListener("click",sendFormByEmail);
+$("copyBtn").addEventListener("click",function(){
+  var t=$("summaryText");
+  function done(){ $("copyOk").classList.add("show"); }
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t.value).then(done).catch(function(){ t.select(); document.execCommand("copy"); done(); }); }
+  else{ t.select(); document.execCommand("copy"); done(); }
+});
+$("downloadBtn").addEventListener("click",function(){
+  var blob=new Blob(["\ufeff"+$("summaryText").value],{type:"text/plain;charset=utf-8"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="نیازسنجی-سایت-"+(val("bizName")||"کسب‌وکار")+".txt"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+});
+$("editBtn").addEventListener("click",function(){ showStep(1); });
+$("restartBtn").addEventListener("click",function(){
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  document.getElementById("wizard").reset(); showStep(1);
+});
+
+/* init */
+restoreDraft();
+showStep(1);
+})();
+</script>
+</body>
+</html>
